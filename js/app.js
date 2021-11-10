@@ -94,29 +94,51 @@ document.addEventListener("DOMContentLoaded", async function () {
 
     cardRemove.map(async function (elem) {
         elem.addEventListener('click', async function (e) {
-            let filterParam = e.path[1].childNodes[5].childNodes[3].innerText;
+            let filterParam = e.path[1].childNodes[5].childNodes[3].innerText; //description of the card
 
+            console.log(filterParam);
             cardData = cardData.filter(el => el.descr !== filterParam);
-            console.log(cardData);
-            fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
+            console.log(Object(...cardData), filterParam);
+
+            await fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
+            fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(Object(cardData))
+            }).then(() => {
+                while (cardBlock.children.length !== 1) {
+                    console.log('removing');
+
+                    cardBlock.removeChild(cardBlock.firstChild);
+                }
+            }).then(async () => { await updateData(); history.go(0) })
+
+            /* fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
                 .then(() => {
+                    cardData = cardData.filter(el => el.descr !== filterParam);
+                    console.log(cardData, filterParam);
+
                     fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
                         },
-                        body: JSON.stringify(...cardData)
-                    }).then(async () => {
+                        body: JSON.stringify(...cardData.filter(el => el.descr !== filterParam))
+                    }).then(() => {
                         while (cardBlock.children.length !== 1) {
                             console.log('removing');
 
                             cardBlock.removeChild(cardBlock.firstChild);
                         }
-                        console.log("done");
-                        await updateData();
-                        history.go(0)
-                    });
-                })
+                    }).then(async () => await updateData())
+                    // .then(async () => {
+                    //     await updateData();
+                    //     console.log("done");
+                    //     // history.go(0)
+                    // });
+                }).then(async () => await updateData()) */
         })
     })
 
