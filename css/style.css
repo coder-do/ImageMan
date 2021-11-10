@@ -1,0 +1,278 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #E5E5E5;
+}
+
+body .header {
+  background: url("../img/Background.png") no-repeat center top;
+  min-height: 336px;
+  padding-top: 140px;
+}
+
+body .header__wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+}
+
+body .header__wrapper h1 {
+  font-size: 60px;
+  margin-left: 31px;
+}
+
+body .main .cards {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  max-width: 1300px;
+  margin: 0 auto;
+  margin-top: 95px;
+}
+
+body .main .cards .card {
+  width: 407px;
+  height: 533px;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 43px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+body .main .cards .card__image {
+  width: 407px;
+  height: 245px;
+  border-radius: 43px 43px 0px 0px;
+}
+
+body .main .cards .card .remove__btn {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+}
+
+body .main .cards .card--plus {
+  background: -webkit-gradient(linear, left top, left bottom, from(#4FDD88), to(#87C5A7));
+  background: linear-gradient(180deg, #4FDD88 0%, #87C5A7 100%);
+  -webkit-box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 13px 12px rgba(0, 0, 0, 0.15);
+}
+
+body .main .cards .card--plus img {
+  display: block;
+  margin: 50% auto;
+}
+
+body .main .cards .card:hover {
+  cursor: pointer;
+  -webkit-box-shadow: 0px 14px 40px rgba(0, 0, 0, 0.15);
+          box-shadow: 0px 14px 40px rgba(0, 0, 0, 0.15);
+}
+
+body .main .cards .card__wrapper {
+  margin: 29px 31px 42px 34px;
+}
+
+body .main .cards .card__wrapper h3 {
+  margin-bottom: 17px;
+}
+
+body .main .cards .card__wrapper p {
+  margin-bottom: 23px;
+}
+
+body .main .cards .card__wrapper div {
+  margin-bottom: 29px;
+}
+
+body .main .cards .card__btn {
+  width: 110px;
+  height: 37px;
+  background: #F8AF6C;
+  border-radius: 9px;
+  color: #fff;
+  cursor: pointer;
+  border: none;
+}
+
+body .main .cards .card__btn:hover {
+  background: #fba757;
+}
+
+body .main .cards .card__btn:active {
+  background: #a85f1b;
+}
+
+.overlay {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(44, 44, 44, 0.7);
+}
+
+.overlay .modal {
+  width: 40%;
+  margin: 0 auto;
+}
+
+.overlay .modal .content {
+  margin: 25% auto;
+  padding: 70px 80px;
+  width: 802px;
+  height: 502px;
+  background: #FFFFFF;
+  -webkit-box-shadow: 0px 20px 47px rgba(0, 0, 0, 0.25);
+          box-shadow: 0px 20px 47px rgba(0, 0, 0, 0.25);
+  border-radius: 39px;
+}
+
+.overlay .modal .content form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.overlay .modal .content form label {
+  font-weight: 600;
+  font-size: 18px;
+  color: #6B6B6B;
+}
+
+.overlay .modal .content form input {
+  border: none;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.overlay .modal .content form input:focus-visible {
+  outline: none;
+}
+
+.overlay .modal .content form textarea {
+  resize: none;
+  outline: none;
+  background: #E3E3E3;
+  border-radius: 25px;
+  height: 160px;
+  font-size: 14px;
+  padding: 20px;
+  font-weight: 600;
+  border: none;
+}
+
+.overlay .modal .content form label[for="descr"] {
+  margin: 21px 0 12px 0;
+}
+
+.overlay .modal .content form input[name="name"] {
+  margin-top: 7px;
+  padding: 20px;
+  height: 44px;
+  background: #E3E3E3;
+  border-radius: 25px;
+}
+
+.overlay .modal .content form input[type="file"] {
+  display: none;
+}
+
+.overlay .modal .content form .custom-file-upload {
+  margin-top: 41px;
+  width: 187px;
+  height: 37px;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+  background: -webkit-gradient(linear, left top, right top, from(#FFB763), to(#FF5757));
+  background: linear-gradient(90deg, #FFB763 0%, #FF5757 100%);
+  border-radius: 9px;
+  font-weight: 600;
+  font-size: 14px;
+  color: #FFFFFF;
+}
+
+.overlay .modal .content form .custom-file-upload div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.overlay .modal .content form .custom-file-upload div img {
+  margin-right: 15px;
+}
+
+.overlay .modal .content form .save__btn {
+  display: none;
+  width: 110px;
+  height: 37px;
+  left: 1172px;
+  top: 791px;
+  border: none;
+  border-radius: 9px;
+  margin-top: 30px;
+  cursor: pointer;
+  color: #fff;
+  background: -webkit-gradient(linear, left top, right top, from(#FFB763), to(#FF5757));
+  background: linear-gradient(90deg, #FFB763 0%, #FF5757 100%);
+}
+
+.overlay .modal .content form .save__btn:hover {
+  background: -webkit-gradient(linear, left top, right top, from(#FFB763), to(#FF5757));
+  background: linear-gradient(90deg, #FFB763 0%, #FF5757 100%);
+}
+
+.overlay .modal .content form .save__btn:active {
+  background: #a85f1b;
+}
+
+.overlay .modal .content form .btn__group {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-top: 20px;
+}
+
+.overlay .modal .content form .btn__group img {
+  display: none;
+  border-radius: 30px;
+}
