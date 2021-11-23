@@ -8,9 +8,10 @@ let modal = document.getElementsByClassName("overlay")[0];
 let uploadImageBtn = document.querySelector('.custom-file-upload');
 let preview = document.getElementById('preview');
 let previewInput = document.querySelector('.previewInput');
-let cardBlock = document.querySelector('.cards');
+let cardBlock = document.getElementsByClassName('cards')[0];
 let form = document.querySelector('form');
-
+let cardRemove = document.getElementsByClassName('remove__btn');
+let cardEditBtn = document.getElementsByClassName('card__btn');
 
 let saveBtn = document.querySelector('.save__btn');
 let addBtn = document.getElementById("add");
@@ -66,10 +67,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     firebaseSetup();
     await updateData();
 
-    let cardRemove = [...document.querySelectorAll('.remove__btn')];
-    let cardEditBtn = [...document.querySelectorAll('.card__btn')];
-
-    cardEditBtn.map(elem => {
+    Array.prototype.map.call(cardEditBtn, (elem => {
         elem.addEventListener('click', function (e) {
             let param = e.path[1].childNodes[3].innerText;
             let element = cardData.filter(el => el.descr === param);
@@ -82,7 +80,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
             isEditing = true;
         })
-    })
+    }));
 
     previewInput.addEventListener('change', function () {
         preview.src = window.URL.createObjectURL(this.files[0])
@@ -92,7 +90,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         saveBtn.style.display = 'block'
     });
 
-    cardRemove.map(async function (elem) {
+    Array.prototype.map.call(cardRemove, async function (elem) {
         elem.addEventListener('click', async function (e) {
             let filterParam = e.path[1].childNodes[5].childNodes[3].innerText; //description of the card
 
@@ -109,36 +107,9 @@ document.addEventListener("DOMContentLoaded", async function () {
                 body: JSON.stringify(Object(cardData))
             }).then(() => {
                 while (cardBlock.children.length !== 1) {
-                    console.log('removing');
-
                     cardBlock.removeChild(cardBlock.firstChild);
                 }
-            }).then(async () => { await updateData(); history.go(0) })
-
-            /* fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
-                .then(() => {
-                    cardData = cardData.filter(el => el.descr !== filterParam);
-                    console.log(cardData, filterParam);
-
-                    fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(...cardData.filter(el => el.descr !== filterParam))
-                    }).then(() => {
-                        while (cardBlock.children.length !== 1) {
-                            console.log('removing');
-
-                            cardBlock.removeChild(cardBlock.firstChild);
-                        }
-                    }).then(async () => await updateData())
-                    // .then(async () => {
-                    //     await updateData();
-                    //     console.log("done");
-                    //     // history.go(0)
-                    // });
-                }).then(async () => await updateData()) */
+            }).then(async () => { await updateData(); /* history.go(0) */ })
         })
     })
 
@@ -169,21 +140,24 @@ document.addEventListener("DOMContentLoaded", async function () {
 
         if (isEditing) {
             cardData = cardData.filter(el => el.descr !== descr);
-            console.log(cardData);
+            console.log("updated data", cardData);
 
-            fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
+            await fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', { method: "DELETE" })
                 .then(() => {
-                    fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify(...cardData)
-                    })
-                }).then(async () => {
-                    await updateData();
-                    console.log('done');
+                    while (cardBlock.children.length !== 1) {
+                        cardBlock.removeChild(cardBlock.firstChild);
+                    }
                 })
+            fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(...cardData)
+            }).then(async () => {
+                await updateData();
+                console.log('done');
+            })
         }
         isEditing = false;
     });
@@ -214,8 +188,6 @@ document.addEventListener("DOMContentLoaded", async function () {
                 cardBlock.insertAdjacentHTML('afterbegin',
                     card(data.src, data.header, data.descr, data.date));
 
-                cardRemove = [...document.querySelectorAll('.remove__btn')];
-
                 fetch('https://instaman-608bb-default-rtdb.firebaseio.com/data.json', {
                     method: 'POST',
                     headers: {
@@ -223,7 +195,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                     },
                     body: JSON.stringify(data)
                 })
-                    .then(() => history.go(0))
+                // .then(() => history.go(0))
             })
         });
     }
